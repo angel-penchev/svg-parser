@@ -7,6 +7,7 @@
 
 enum HelperErrorCode {
     CANNOT_SET_NULLPTR_AS_VALUE,
+    INDEX_OUT_OF_INDEX
 };
 
 #endif //SVG_PARSER_HELPERERRORCODE_H
