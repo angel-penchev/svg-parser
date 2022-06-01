@@ -1,0 +1,12 @@
+//
+// Created by apenchev on 5/30/2022.
+//
+
+#ifndef SVG_PARSER_HELPERERRORCODE_H
+#define SVG_PARSER_HELPERERRORCODE_H
+
+enum HelperErrorCode {
+    CANNOT_SET_NULLPTR_AS_VALUE,
+};
+
+#endif //SVG_PARSER_HELPERERRORCODE_H
