@@ -8,6 +8,8 @@
 
 #include <ostream>
 
+#define MAX_STRING_LEN 1024
+
 class String {
 private:
     char *value = nullptr;
@@ -21,9 +23,13 @@ public:
 
     String(const String &other);
 
+    String(std::istream &in, char delimiter);
+
     String &operator=(const String &other);
 
     friend std::ostream &operator<<(std::ostream &out, const String &string);
+
+    String operator+(const String &other) const;
 
     virtual ~String();
 
@@ -32,6 +38,8 @@ public:
     void setValue(const char *newValue);
 
     unsigned int getLength() const;
+
+    String concatenate(const String &other) const;
 };
 
 

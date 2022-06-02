@@ -3,6 +3,7 @@
 //
 
 #include <cstring>
+#include <iostream>
 #include "../../include/helper/String.h"
 #include "../../include/exception/HelperException.h"
 
@@ -23,6 +24,21 @@ String::String(const String &other) {
 }
 
 /**
+ * String input file constructor.
+ * Reads the information for a String value (until a delimiter) from a file and constructs a String object based on it.
+ * @param in Input file stream
+ * @param delimiter Delimiter, indicating the end of the String
+ */
+String::String(std::istream &in, const char delimiter) {
+    char readBuffer[MAX_STRING_LEN];
+    in.getline(readBuffer, MAX_STRING_LEN, delimiter);
+
+    unsigned char valueLength = std::strlen(readBuffer) + 1;
+    this->value = new char[valueLength];
+    std::strncpy(this->value, readBuffer, valueLength);
+}
+
+/**
  * Equality "=" operator override.
  * @param other Reference to another String object
  * @return Reference to self
@@ -38,11 +54,19 @@ String &String::operator=(const String &other) {
 /**
  * Output "<<" operator override for output streams.
  * @param out Output stream
- * @param string Reference to a Book object to output
+ * @param string Reference to a String object to output
  * @return Output stream reference
  */
 std::ostream &operator<<(std::ostream &out, const String &string) {
     return out << string.getValue();
+}
+
+/**
+ * Addition "+" operator override.
+ * @param other Reference to a String to be appended
+ */
+String String::operator+(const String &other) const {
+    return this->concatenate(other);
 }
 
 /**
@@ -67,10 +91,10 @@ const char *String::getValue() const {
 void String::setValue(const char *newValue) {
     // Verifying input is not null
     if (newValue == nullptr) {
-        throw HelperException(HelperErrorCode::CANNOT_SET_NULLPTR_AS_VALUE);
+        throw HelperException(HelperErrorCode::CANNOT_SET_NULLPTR_AS_HELPER_VALUE);
     }
 
-    // Allocating memory and copying the input description
+    // Clearing previously allocated memory, allocating new memory and copying the string value
     delete[] this->value;
     this->value = new char[std::strlen(newValue) + 1];
     std::strncpy(this->value, newValue, std::strlen(newValue) + 1);
@@ -82,6 +106,27 @@ void String::setValue(const char *newValue) {
  */
 unsigned int String::getLength() const {
     return std::strlen(this->value);
+}
+
+/**
+ * Appends another string to the String.
+ * @param other Other string to be appended
+ */
+/**
+ * Concatenates the current string with another
+ * @param other
+ * @return
+ */
+String String::concatenate(const String &other) const {
+    // Create a new value buffer long enough to hold both strings and a '\0'
+    unsigned int combinedLength = this->getLength() + other.getLength() + 1;
+    char *result = new char[combinedLength];
+
+    // Copy this string and other string to one array
+    std::strncpy(result, this->getValue(), this->getLength() + 1);
+    std::strcat(result, other.getValue());
+
+    return {result};
 }
 
 /**
