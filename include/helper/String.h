@@ -6,6 +6,8 @@
 #define SVG_PARSER_STRING_H
 
 
+#include <ostream>
+
 class String {
 private:
     char *value = nullptr;
@@ -15,11 +17,13 @@ private:
     void clear();
 
 public:
-    String(const char *value);
+    String(const char *value = "");
 
     String(const String &other);
 
     String &operator=(const String &other);
+
+    friend std::ostream &operator<<(std::ostream &out, const String &string);
 
     virtual ~String();
 

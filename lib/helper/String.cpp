@@ -36,6 +36,16 @@ String &String::operator=(const String &other) {
 }
 
 /**
+ * Output "<<" operator override for output streams.
+ * @param out Output stream
+ * @param string Reference to a Book object to output
+ * @return Output stream reference
+ */
+std::ostream &operator<<(std::ostream &out, const String &string) {
+    return out << string.getValue();
+}
+
+/**
  * String destructor.
  */
 String::~String() {
