@@ -16,7 +16,6 @@ set(HEADER_FILES
 set(SOURCE_FILES
         exception/HelperException.cpp
         helper/String.cpp
-        helper/Vector.cpp
         dom/DomElementAttribute.cpp
         program/Program.cpp)
 
