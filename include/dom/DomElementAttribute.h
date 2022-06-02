@@ -6,7 +6,9 @@
 #define SVG_PARSER_DOMELEMENTATTRIBUTE_H
 
 
+#include <fstream>
 #include "../helper/String.h"
+#include "../../include/exception/DomException.h"
 
 class DomElementAttribute {
 private:
@@ -14,6 +16,8 @@ private:
     String value;
 public:
     explicit DomElementAttribute(const String &name = "", const String &value = "");
+
+    explicit DomElementAttribute(std::istream &in);
 
     String getName() const;
 

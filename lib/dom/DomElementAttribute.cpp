@@ -11,6 +11,25 @@
  */
 DomElementAttribute::DomElementAttribute(const String &name, const String &value) : name(name), value(value) {}
 
+
+DomElementAttribute::DomElementAttribute(std::istream &in) : name(), value() {
+    char readBuffer;
+
+    // Get attribute name
+    this->name = String(in, '='); // TODO: Skip whitespaces
+
+    // TODO: Validate that the name doesn't contain '/' and ' '?
+
+    // Validate the value starts with an opening quote
+    in.read(&readBuffer, sizeof(readBuffer));
+    if (readBuffer != '"' && readBuffer != '\'') {
+        throw DomException(DomErrorCode::INVALID_DOM_ATTRIBUTE_FORMAT);
+    }
+
+    // Get attribute value
+    this->value = String(in, '"');
+}
+
 /**
  * DomElementAttribute name getter.
  * @return DomElementAttribute name
