@@ -13,6 +13,33 @@ DomElement::DomElement(const DomElement &other) : tag(), attributes(), child() {
     this->copy(other);
 }
 
+DomElement::DomElement(std::istream &in) : tag(), attributes(), child() {
+    char readBuffer;
+
+    // Validate the element starts with an '<'
+    in.read(&readBuffer, sizeof(readBuffer));
+    if (readBuffer != '<') {
+        throw DomException(DomErrorCode::INVALID_DOM_ELEMENT_FORMAT);
+    }
+
+    // Get tag name
+    this->tag = String(in, ' ');
+
+    // Get all attributes
+    int i = 0;
+    while (in.peek() != '/' && in.peek() != '>') {
+        this->attributes.push(DomElementAttribute(in));
+        std::cout << this->attributes[i++].getName() << '\n';
+        in.get(); // TODO: Skip multiple whitespaces
+    }
+
+    // Get child
+    in.read(&readBuffer, sizeof(readBuffer));
+    if (readBuffer == '>') {
+        this->child = new DomElement(in);
+    }
+}
+
 DomElement &DomElement::operator=(const DomElement &other) {
     if (this != &other) {
         this->clear();

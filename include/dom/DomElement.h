@@ -27,6 +27,8 @@ public:
 
     DomElement(const DomElement &other);
 
+    explicit DomElement(std::istream &in);
+
     DomElement &operator=(const DomElement &other);
 
     virtual ~DomElement();
