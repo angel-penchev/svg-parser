@@ -3,49 +3,45 @@
 //
 
 #include "../../include/dom/DomElement.h"
+#include "../../include/helper/FileStreamHelper.h"
 
-DomElement::DomElement(const String &tag, const Vector<DomElementAttribute> &attributes, DomElement *child)
-        : tag(tag), attributes(attributes), child() {
-    this->setChild(child);
-}
+DomElement::DomElement(const String &tag, const Vector<DomElementAttribute> &attributes,
+                       const Vector<DomElement *> &children) : tag(tag), attributes(attributes), children(children) {}
 
-DomElement::DomElement(const DomElement &other) : tag(), attributes(), child() {
-    this->copy(other);
-}
 
-DomElement::DomElement(std::istream &in) : tag(), attributes(), child() {
-    char readBuffer;
-
+DomElement::DomElement(std::istream &in) : tag(), attributes(), children() {
     // Validate the element starts with an '<'
-    in.read(&readBuffer, sizeof(readBuffer));
-    if (readBuffer != '<') {
+    if (in.get() != '<') {
         throw DomException(DomErrorCode::INVALID_DOM_ELEMENT_FORMAT);
     }
 
     // Get tag name
-    this->tag = String(in, ' ');
+    this->tag = String(in, ' '); // TODO: Handle case with no attributes
 
     // Get all attributes
-    int i = 0;
     while (in.peek() != '/' && in.peek() != '>') {
         this->attributes.push(DomElementAttribute(in));
-        std::cout << this->attributes[i++].getName() << '\n';
         in.get(); // TODO: Skip multiple whitespaces
     }
 
-    // Get child
-    in.read(&readBuffer, sizeof(readBuffer));
-    if (readBuffer == '>') {
-        this->child = new DomElement(in);
-    }
-}
+    // Get children if the tag is not self closing
+    if (in.get() == '>') {
+        while (FileStreamHelper::peekWithOffset(in, 2) != '/') {
+            this->children.push(new DomElement(in));
+        };
 
-DomElement &DomElement::operator=(const DomElement &other) {
-    if (this != &other) {
-        this->clear();
-        this->copy(other);
+        // Validate the element has a closing tag
+        String closingTag(in, '>');
+        String expectedClosingTag = String("</") + String(this->tag);
+        if (closingTag != expectedClosingTag) {
+            throw DomException(DomErrorCode::INVALID_DOM_ELEMENT_FORMAT);
+        }
+    } else {
+        // Validate the element ends with '>'
+        if (in.get() != '>') {
+            throw DomException(DomErrorCode::INVALID_DOM_ELEMENT_FORMAT);
+        }
     }
-    return *this;
 }
 
 DomElement::~DomElement() {
@@ -68,28 +64,16 @@ void DomElement::setAttributes(const Vector<DomElementAttribute> &newAttributes)
     this->attributes = newAttributes;
 }
 
-DomElement *DomElement::getChild() const {
-    return this->child;
+const Vector<DomElement *> &DomElement::getChildren() const {
+    return this->children;
 }
 
-void DomElement::setChild(const DomElement *newChild) {
-    // Verifying input is not null
-    if (newChild == nullptr) {
-        throw DomException(DomErrorCode::CANNOT_SET_NULLPTR_AS_DOM_VALUE);
-    }
-
-    // Deleting old child and copying the new child in its place
-    delete this->child;
-    this->child = new DomElement(*newChild);
-}
-
-void DomElement::copy(const DomElement &other) {
-    this->tag = other.tag;
-    this->attributes = other.attributes;
-    this->setChild(other.child);
+void DomElement::setChildren(const Vector<DomElement *> &newChildren) {
+    this->children = newChildren;
 }
 
 void DomElement::clear() {
-    delete this->child;
-    this->child = nullptr;
+    for (unsigned int i = 0; i < this->children.getSize(); i++) {
+        delete this->children[i];
+    }
 }

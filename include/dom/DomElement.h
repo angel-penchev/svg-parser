@@ -14,22 +14,16 @@ class DomElement {
 private:
     String tag;
     Vector<DomElementAttribute> attributes;
-    DomElement *child = nullptr;
-
-    void copy(const DomElement &other);
+    Vector<DomElement *> children;
 
     void clear();
 
 public:
     explicit DomElement(const String &tag = "",
                         const Vector<DomElementAttribute> &attributes = Vector<DomElementAttribute>(),
-                        DomElement *child = nullptr);
-
-    DomElement(const DomElement &other);
+                        const Vector<DomElement *> &children = Vector<DomElement *>());
 
     explicit DomElement(std::istream &in);
-
-    DomElement &operator=(const DomElement &other);
 
     virtual ~DomElement();
 
@@ -41,9 +35,9 @@ public:
 
     void setAttributes(const Vector<DomElementAttribute> &newAttributes);
 
-    DomElement *getChild() const;
+    const Vector<DomElement *> &getChildren() const;
 
-    void setChild(const DomElement *newChild);
+    void setChildren(const Vector<DomElement *> &newChildren);
 };
 
 

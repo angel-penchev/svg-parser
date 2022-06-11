@@ -12,6 +12,8 @@ const char *DomException::getErrorMessage() const {
             return "Cannot assign value from null pointer.";
         case DomErrorCode::INVALID_DOM_ELEMENT_FORMAT:
             return "Invalid DOM element formatting.";
+        case DomErrorCode::INVALID_DOM_ATTRIBUTE_FORMAT:
+            return "Invalid DOM attribute formatting.";
         default:
             throw std::invalid_argument("Unimplemented item.");
     }

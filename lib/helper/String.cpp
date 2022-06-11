@@ -70,6 +70,24 @@ String String::operator+(const String &other) const {
 }
 
 /**
+ * Equality "==" operator override.
+ * @param other Reference to a String to be compared with
+ * @return Whether the Strings are the same or not
+ */
+bool String::operator==(const String &other) const {
+    return !std::strcmp(this->value, other.value);
+}
+
+/**
+ * Inequality "!=" operator override.
+ * @param other Reference to a String to be compared with
+ * @return Whether the Strings are not the same
+ */
+bool String::operator!=(const String &other) const {
+    return std::strcmp(this->value, other.value);
+}
+
+/**
  * String destructor.
  */
 String::~String() {

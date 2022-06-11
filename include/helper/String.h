@@ -31,6 +31,10 @@ public:
 
     String operator+(const String &other) const;
 
+    bool operator==(const String &other) const;
+
+    bool operator!=(const String &rhs) const;
+
     virtual ~String();
 
     const char *getValue() const;

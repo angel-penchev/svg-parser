@@ -12,6 +12,7 @@ set(HEADER_FILES
         ${HEADERS_DIR}/exception/DomErrorCode.h
         ${HEADERS_DIR}/helper/String.h
         ${HEADERS_DIR}/helper/Vector.h
+        ${HEADERS_DIR}/helper/FileStreamHelper.h
         ${HEADERS_DIR}/dom/DomDocument.h
         ${HEADERS_DIR}/dom/DomElement.h
         ${HEADERS_DIR}/dom/DomElementAttribute.h
@@ -21,6 +22,7 @@ set(SOURCE_FILES
         exception/HelperException.cpp
         exception/DomException.cpp
         helper/String.cpp
+        helper/FileStreamHelper.cpp
         dom/DomDocument.cpp
         dom/DomElement.cpp
         dom/DomElementAttribute.cpp
