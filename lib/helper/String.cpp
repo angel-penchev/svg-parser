@@ -138,13 +138,16 @@ unsigned int String::getLength() const {
 String String::concatenate(const String &other) const {
     // Create a new value buffer long enough to hold both strings and a '\0'
     unsigned int combinedLength = this->getLength() + other.getLength() + 1;
-    char *result = new char[combinedLength];
+    char *combinedContents = new char[combinedLength];
 
     // Copy this string and other string to one array
-    std::strncpy(result, this->getValue(), this->getLength() + 1);
-    std::strcat(result, other.getValue());
+    std::strncpy(combinedContents, this->getValue(), this->getLength() + 1);
+    std::strcat(combinedContents, other.getValue());
 
-    return {result};
+    String result(combinedContents);
+    delete[] combinedContents;
+
+    return result;
 }
 
 /**
