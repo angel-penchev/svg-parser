@@ -12,7 +12,8 @@ FetchContent_MakeAvailable(gtest)
 
 # add test source files
 set(TEST_FILES
-        e2e/SvgParserTest.cpp)
+        e2e/SvgParserTest.cpp
+        unit/dom/DomElementAttributeTest.cpp)
 
 add_executable(svg_parser_test ${TEST_FILES})
 target_link_libraries(svg_parser_test svg_parser_lib)
