@@ -16,6 +16,8 @@ private:
     Vector<DomElementAttribute> attributes;
     Vector<DomElement *> children;
 
+    void copy(const DomElement &other);
+
     void clear();
 
 public:
@@ -24,6 +26,10 @@ public:
                         const Vector<DomElement *> &children = Vector<DomElement *>());
 
     explicit DomElement(std::istream &in);
+
+    DomElement(const DomElement &other);
+
+    DomElement &operator=(const DomElement &other);
 
     virtual ~DomElement();
 

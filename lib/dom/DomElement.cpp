@@ -24,7 +24,7 @@ DomElement::DomElement(std::istream &in) : tag(), attributes(), children() {
         in.get(); // TODO: Skip multiple whitespaces
     }
 
-    // Get children if the tag is not self closing
+    // Get children if the tag is not self-closing
     if (in.get() == '>') {
         while (FileStreamHelper::peekWithOffset(in, 2) != '/') {
             this->children.push(new DomElement(in));
@@ -42,6 +42,18 @@ DomElement::DomElement(std::istream &in) : tag(), attributes(), children() {
             throw DomException(DomErrorCode::INVALID_DOM_ELEMENT_FORMAT);
         }
     }
+}
+
+DomElement::DomElement(const DomElement &other) {
+    this->copy(other);
+}
+
+DomElement &DomElement::operator=(const DomElement &other) {
+    if (this != &other) {
+        this->clear();
+        this->copy(other);
+    }
+    return *this;
 }
 
 DomElement::~DomElement() {
@@ -70,6 +82,14 @@ const Vector<DomElement *> &DomElement::getChildren() const {
 
 void DomElement::setChildren(const Vector<DomElement *> &newChildren) {
     this->children = newChildren;
+}
+
+void DomElement::copy(const DomElement &other) {
+    this->setTag(tag);
+    this->setAttributes(attributes);
+    for (unsigned int i = 0; i < other.children.getSize(); i++) {
+        this->children[i] = other.children[i];
+    }
 }
 
 void DomElement::clear() {
