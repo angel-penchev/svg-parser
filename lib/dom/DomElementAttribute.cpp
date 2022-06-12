@@ -30,6 +30,14 @@ DomElementAttribute::DomElementAttribute(std::istream &in) : name(), value() {
     this->value = String(in, '"');
 }
 
+bool DomElementAttribute::operator==(const DomElementAttribute &other) const {
+    return this->name == other.name && this->value == other.value;
+}
+
+bool DomElementAttribute::operator!=(const DomElementAttribute &other) const {
+    return this->name != other.name || this->value != other.value;
+}
+
 /**
  * DomElementAttribute name getter.
  * @return DomElementAttribute name

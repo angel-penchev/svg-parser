@@ -26,6 +26,10 @@ public:
     String getValue() const;
 
     void setValue(const String &newValue);
+
+    bool operator==(const DomElementAttribute &other) const;
+
+    bool operator!=(const DomElementAttribute &rhs) const;
 };
 
 
