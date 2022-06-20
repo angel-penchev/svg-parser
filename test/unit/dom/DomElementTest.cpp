@@ -12,6 +12,7 @@ protected:
     const String fixtureDirectoryFilepath = PATH_TO_FIXTURES;
     const String domElementFilepath = fixtureDirectoryFilepath + "dom-element.xml";
     const String domElementWithChildrenFilepath = fixtureDirectoryFilepath + "dom-element-with-children.xml";
+    const String outDomElementFilepath = "out-dom-element.xml";
 
     DomElement *domElement{};
 
@@ -51,7 +52,6 @@ TEST_F(DomElementFixture, ShouldHandleFileInputWithNoChildren) {
 }
 
 TEST_F(DomElementFixture, ShouldHandleFileInputWithMultipleChildren) {
-
     // Validate tag value
     ASSERT_STREQ(domElement->getTag().getValue(), "svg");
 
@@ -83,4 +83,26 @@ TEST_F(DomElementFixture, ShouldHandleFileInputWithMultipleChildren) {
     ASSERT_EQ(domElement->getChildren()[2]->getAttributes()[3], DomElementAttribute("height", "10"));
     ASSERT_EQ(domElement->getChildren()[2]->getAttributes()[4], DomElementAttribute("fill", "red"));
     ASSERT_EQ(domElement->getChildren()[2]->getChildren().getSize(), 0);
+}
+
+TEST_F(DomElementFixture, ShouldExposeAMethodForSerializing) {
+    // Serialize a DomElementAttribute to a text file
+    std::ofstream outFile(outDomElementFilepath.getValue(), std::ios::out | std::ios::trunc);
+    ASSERT_TRUE(outFile);
+    outFile << *domElement;
+    outFile.close();
+
+    // Verify file contents
+    std::ifstream resultFile(outDomElementFilepath.getValue(), std::ios::in);
+    ASSERT_TRUE(resultFile);
+    DomElement domElementFromFile(resultFile);
+
+    // Validate tag value
+    ASSERT_STREQ(domElementFromFile.getTag().getValue(), "svg");
+
+    // Validate attributes count
+    ASSERT_EQ(domElementFromFile.getAttributes().getSize(), 0);
+
+    // Validate children count
+    ASSERT_EQ(domElementFromFile.getChildren().getSize(), 3);
 }
