@@ -29,7 +29,7 @@ public:
 
     virtual ~DomDocument();
 
-    void serialize(std::ostream out);
+    void save();
 
     const String &getVersionTag() const;
 

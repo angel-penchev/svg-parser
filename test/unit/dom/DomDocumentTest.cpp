@@ -10,6 +10,7 @@ class DomDocumentFixture : public ::testing::Test {
 protected:
     const String fixtureDirectoryFilepath = PATH_TO_FIXTURES;
     const String domDocumentFilepath = fixtureDirectoryFilepath + "dom-document.xml";
+    const String outDomDocumentFilepath = "out-dom-document.xml";
 
     DomDocument *domDocument{};
 
@@ -44,4 +45,14 @@ TEST_F(DomDocumentFixture, ShouldExposeAFilepathConstructor) {
 
     // Validate children count
     ASSERT_EQ(domDocument->getParentElement()->getChildren().getSize(), 3);
+}
+
+TEST_F(DomDocumentFixture, ShouldExposeAMethodForSaving) {
+    // Save the DomDocument
+    domDocument->save();
+
+    // Verify file contents
+    std::ifstream resultFile(outDomDocumentFilepath.getValue(), std::ios::in);
+    ASSERT_TRUE(resultFile);
+    DomDocument domDocumentFromFile(domDocumentFilepath);
 }

@@ -7,25 +7,25 @@
 
 DomDocument::DomDocument(const String &filename) : filename(filename) {
     // Open DOM file
-    std::ifstream file(filename.getValue(), std::ios::in);
-    if (!file) {
+    std::ifstream in(filename.getValue(), std::ios::in);
+    if (!in) {
         throw DomException(DomErrorCode::CANNOT_SET_NULLPTR_AS_DOM_VALUE);
     }
-    FileStreamHelper::skipWhitespaces(file);
+    FileStreamHelper::skipWhitespaces(in);
 
     // Read xml version tag
-    this->versionTag.getLine(file);
-    FileStreamHelper::skipWhitespaces(file);
+    this->versionTag.getLine(in);
+    FileStreamHelper::skipWhitespaces(in);
 
     // Read doctype tag
-    this->doctypeTag.getLine(file);
-    FileStreamHelper::skipWhitespaces(file);
+    this->doctypeTag.getLine(in);
+    FileStreamHelper::skipWhitespaces(in);
 
     // Read all parent elements in DOM tree
-    this->parentElement = new DomElement(file);
+    this->parentElement = new DomElement(in);
 
     // Close the DOM file
-    file.close();
+    in.close();
 }
 
 DomDocument::DomDocument(const DomDocument &other) {
@@ -44,8 +44,9 @@ DomDocument::~DomDocument() {
     this->clear();
 }
 
-void DomDocument::serialize(std::ostream out) {
-    // TODO: Serialize
+void DomDocument::save() {
+    std::ofstream out(this->filename.getValue(), std::ios::out | std::ios::trunc);
+    out << this->versionTag << '\n' << this->doctypeTag << '\n' << *this->parentElement;
 }
 
 const String &DomDocument::getVersionTag() const {
