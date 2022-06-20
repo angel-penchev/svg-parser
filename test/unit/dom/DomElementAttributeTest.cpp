@@ -9,27 +9,27 @@
 class DomElementAttributeFixture : public ::testing::Test {
 protected:
     const String fixtureDirectoryFilepath = PATH_TO_FIXTURES;
-    const String domSingleAttributeFilepath = fixtureDirectoryFilepath + "dom-single-attribute.xml";
+    const String domSingleAttributeFilepath = fixtureDirectoryFilepath + "dom-attribute.xml";
 
-    DomElementAttribute *domElementAttribute{};
+    DomElementAttribute *domAttribute{};
 
     void SetUp() override {
+        // Open fixture file and construct DomElementAttribute
+        std::ifstream file(domSingleAttributeFilepath.getValue(), std::ios::in);
+        ASSERT_TRUE(file);
+        domAttribute = new DomElementAttribute(file);
+        file.close();
     }
 
     void TearDown() override {
+        delete domAttribute;
     }
 };
 
 TEST_F(DomElementAttributeFixture, ShouldExposeAFileInputConstructor) {
-    // Construct DomElementAttribute from file
-    std::ifstream file(domSingleAttributeFilepath.getValue(), std::ios::in);
-    ASSERT_TRUE(file);
-    DomElementAttribute domAttributeFromFile = DomElementAttribute(file);
-    file.close();
-
     // Validate attribute name
-    ASSERT_STREQ(domAttributeFromFile.getName().getValue(), "width");
+    ASSERT_STREQ(domAttribute->getName().getValue(), "width");
 
     // Validate attribute value
-    ASSERT_STREQ(domAttributeFromFile.getValue().getValue(), "10");
+    ASSERT_STREQ(domAttribute->getValue().getValue(), "10");
 }
