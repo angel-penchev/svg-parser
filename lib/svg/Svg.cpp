@@ -9,6 +9,10 @@
 
 Svg::Svg() : document(), shapes() {}
 
+/**
+ * Svg constructor from DomDocument.
+ * @param document DomDocument to be read
+ */
 Svg::Svg(const DomDocument &document) : document(document), shapes() {
     // Validate xml version tag
     if (this->document.getVersionTag() != R"(<?xml version="1.0" standalone="no"?>)") {
@@ -44,22 +48,41 @@ Svg::Svg(const DomDocument &document) : document(document), shapes() {
     }
 }
 
+/**
+ * DomDocument getter.
+ * @return SVG DomDocument
+ */
 DomDocument Svg::getDocument() const {
     return document;
 }
 
+/**
+ * DomDocument setter.
+ * @param newDocument DomDocument to be set.
+ */
 void Svg::setDocument(const DomDocument &newDocument) {
     this->document = newDocument;
 }
 
+/**
+ * Shapes getter.
+ * @return SVG shapes.
+ */
 const Vector<Shape> &Svg::getShapes() const {
     return this->shapes;
 }
 
+/**
+ * Shapes setter.
+ * @param newShapes SVG shapes to be set
+ */
 void Svg::setShapes(const Vector<Shape> &newShapes) {
     this->shapes = newShapes;
 }
 
+/**
+ * Updates the SVG document with information from shapes.
+ */
 void Svg::updateDocument() {
     Vector<DomElement *> updatedChildren;
     for (unsigned int i = 0; i < this->shapes.getSize(); i++) {
