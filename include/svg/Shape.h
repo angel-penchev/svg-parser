@@ -12,7 +12,7 @@ class Shape {
 protected:
     String fill;
     String stroke;
-    unsigned int strokeWidth;
+    unsigned int strokeWidth = 0;
 public:
     explicit Shape(DomElement const &domElement = DomElement());
 
@@ -27,6 +27,8 @@ public:
     unsigned int getStrokeWidth() const;
 
     void setStrokeWidth(unsigned int newStrokeWidth);
+
+    virtual DomElement toDomElement();
 };
 
 

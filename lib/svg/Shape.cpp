@@ -46,3 +46,16 @@ unsigned int Shape::getStrokeWidth() const {
 void Shape::setStrokeWidth(unsigned int newStrokeWidth) {
     this->strokeWidth = newStrokeWidth;
 }
+
+DomElement Shape::toDomElement() {
+    DomElement result;
+
+    Vector<DomElementAttribute> attributes;
+    attributes.push(DomElementAttribute("fill", fill));
+    attributes.push(DomElementAttribute("stroke", stroke));
+    attributes.push(DomElementAttribute("stroke-width", String(strokeWidth)));
+
+    result.setAttributes(attributes);
+
+    return result;
+}

@@ -20,7 +20,7 @@ Rect::Rect(DomElement const &domElement) : Shape(), x(), y(), width(), height(),
             this->strokeWidth = domElement.getAttributes()[i].getValue().toDouble();
             continue;
         }
-        
+
         if (domElement.getAttributes()[i].getName() == "x") {
             this->x = domElement.getAttributes()[i].getValue().toDouble();
             continue;
@@ -99,4 +99,20 @@ double Rect::getRy() const {
 
 void Rect::setRy(double newRy) {
     Rect::ry = newRy;
+}
+
+DomElement Rect::toDomElement() {
+    DomElement result = Shape::toDomElement();
+
+    Vector<DomElementAttribute> attributes = result.getAttributes();
+    attributes.push(DomElementAttribute("x", x));
+    attributes.push(DomElementAttribute("y", y));
+    attributes.push(DomElementAttribute("width", height));
+    attributes.push(DomElementAttribute("width", rx));
+    attributes.push(DomElementAttribute("width", ry));
+
+    result.setTag("circle");
+    result.setAttributes(attributes);
+
+    return result;
 }

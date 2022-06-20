@@ -16,6 +16,14 @@ String::String(const char *value) : value() {
 }
 
 /**
+ * String from a double constructor.
+ * @param value Value of the String
+ */
+String::String(double value) {
+    this->setValue(std::to_string(value).c_str());
+}
+
+/**
  * String copy-constructor.
  * @param other Reference to another String object
  */

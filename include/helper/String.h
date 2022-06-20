@@ -22,6 +22,8 @@ private:
 public:
     String(const char *value = "");
 
+    String(double value);
+
     String(const String &other);
 
     String(std::istream &in, Vector<char> delimiters);

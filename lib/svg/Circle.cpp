@@ -61,3 +61,17 @@ double Circle::getR() const {
 void Circle::setR(double newR) {
     this->r = newR;
 }
+
+DomElement Circle::toDomElement() {
+    DomElement result = Shape::toDomElement();
+
+    Vector<DomElementAttribute> attributes = result.getAttributes();
+    attributes.push(DomElementAttribute("cx", cx));
+    attributes.push(DomElementAttribute("cy", cy));
+    attributes.push(DomElementAttribute("r", r));
+
+    result.setTag("circle");
+    result.setAttributes(attributes);
+
+    return result;
+}

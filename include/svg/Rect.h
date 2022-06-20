@@ -10,12 +10,12 @@
 
 class Rect : public Shape {
 private:
-    double x;
-    double y;
-    double width;
-    double height;
-    double rx;
-    double ry;
+    double x = 0;
+    double y = 0;
+    double width = 0;
+    double height = 0;
+    double rx = 0;
+    double ry = 0;
 public:
     explicit Rect(DomElement const &domElement = DomElement());
 
@@ -42,6 +42,8 @@ public:
     double getRy() const;
 
     void setRy(double newRy);
+
+    DomElement toDomElement() override;
 };
 
 

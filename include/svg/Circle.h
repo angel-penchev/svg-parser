@@ -10,9 +10,9 @@
 
 class Circle : public Shape {
 private:
-    double cx;
-    double cy;
-    double r;
+    double cx = 0;
+    double cy = 0;
+    double r = 0;
 public:
     explicit Circle(DomElement const &domElement = DomElement());
 
@@ -27,6 +27,8 @@ public:
     double getR() const;
 
     void setR(double newR);
+
+    DomElement toDomElement() override;
 };
 
 
