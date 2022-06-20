@@ -18,6 +18,7 @@ set(HEADER_FILES
         ${HEADERS_DIR}/dom/DomElementAttribute.h
         ${HEADERS_DIR}/svg/Svg.h
         ${HEADERS_DIR}/svg/Shape.h
+        ${HEADERS_DIR}/svg/Rect.h
         ${HEADERS_DIR}/program/Program.h)
 
 set(SOURCE_FILES
@@ -30,6 +31,7 @@ set(SOURCE_FILES
         dom/DomElementAttribute.cpp
         svg/Svg.cpp
         svg/Shape.cpp
+        svg/Rect.cpp
         program/Program.cpp)
 
 add_library(${LIBRARY_NAME} STATIC ${SOURCE_FILES} ${HEADER_FILES})
