@@ -22,3 +22,27 @@ Shape::Shape(DomElement const &domElement) : fill(), stroke(), strokeWidth() {
         }
     }
 }
+
+const String &Shape::getFill() const {
+    return this->fill;
+}
+
+void Shape::setFill(const String &newFill) {
+    this->fill = newFill;
+}
+
+const String &Shape::getStroke() const {
+    return this->stroke;
+}
+
+void Shape::setStroke(const String &newStroke) {
+    this->stroke = newStroke;
+}
+
+unsigned int Shape::getStrokeWidth() const {
+    return this->strokeWidth;
+}
+
+void Shape::setStrokeWidth(unsigned int newStrokeWidth) {
+    this->strokeWidth = newStrokeWidth;
+}
