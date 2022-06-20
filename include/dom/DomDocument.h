@@ -12,7 +12,7 @@
 class DomDocument {
 private:
     String filename;
-    Vector<DomElement *> elements;
+    DomElement *parentElement;
 
     void copy(const DomDocument &other);
 
@@ -33,9 +33,9 @@ public:
 
     void setFilename(const String &newFilename);
 
-    const Vector<DomElement *> &getElements() const;
+    DomElement *getParentElement() const;
 
-    void setElements(const Vector<DomElement *> &newElements);
+    void setParentElement(DomElement *newParentElement);
 };
 
 

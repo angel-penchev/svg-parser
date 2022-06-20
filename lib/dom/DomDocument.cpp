@@ -12,9 +12,7 @@ DomDocument::DomDocument(const String &filename) : filename(filename) {
     }
 
     // Read all parent elements in DOM tree
-    while (file.peek() != -1) {
-        this->elements.push(new DomElement(file));
-    }
+    this->parentElement = new DomElement(file);
 
     // Close the DOM file
     file.close();
@@ -48,23 +46,19 @@ void DomDocument::setFilename(const String &newFilename) {
     this->filename = newFilename;
 }
 
-const Vector<DomElement *> &DomDocument::getElements() const {
-    return this->elements;
+DomElement *DomDocument::getParentElement() const {
+    return this->parentElement;
 }
 
-void DomDocument::setElements(const Vector<DomElement *> &newElements) {
-    this->elements = newElements;
+void DomDocument::setParentElement(DomElement *newParentElement) {
+    this->parentElement = newParentElement;
 }
 
 void DomDocument::copy(const DomDocument &other) {
     this->setFilename(filename);
-    for (unsigned int i = 0; i < other.elements.getSize(); i++) {
-        this->elements[i] = other.elements[i];
-    }
+    this->parentElement = other.parentElement;
 }
 
 void DomDocument::clear() {
-    for (unsigned int i = 0; i < this->elements.getSize(); i++) {
-        delete this->elements[i];
-    }
+    delete this->parentElement;
 }
