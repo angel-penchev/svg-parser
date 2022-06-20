@@ -9,13 +9,13 @@
 class DomElementAttributeFixture : public ::testing::Test {
 protected:
     const String fixtureDirectoryFilepath = PATH_TO_FIXTURES;
-    const String domSingleAttributeFilepath = fixtureDirectoryFilepath + "dom-attribute.xml";
+    const String domAttributeFilepath = fixtureDirectoryFilepath + "dom-attribute.xml";
 
     DomElementAttribute *domAttribute{};
 
     void SetUp() override {
         // Open fixture file and construct DomElementAttribute
-        std::ifstream file(domSingleAttributeFilepath.getValue(), std::ios::in);
+        std::ifstream file(domAttributeFilepath.getValue(), std::ios::in);
         ASSERT_TRUE(file);
         domAttribute = new DomElementAttribute(file);
         file.close();
