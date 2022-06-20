@@ -177,3 +177,7 @@ void String::clear() {
     delete[] this->value;
     this->value = nullptr;
 }
+
+bool String::stdinGetLine(const char delimiter) {
+    return (bool) std::cin.getline(this->value, MAX_STRING_LEN, delimiter);
+}

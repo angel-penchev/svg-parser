@@ -45,6 +45,8 @@ public:
     unsigned int getLength() const;
 
     String concatenate(const String &other) const;
+
+    bool stdinGetLine(const char delimiter = '\n');
 };
 
 
