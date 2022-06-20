@@ -1,0 +1,14 @@
+//
+// Created by apenchev on 6/20/2022.
+//
+
+#ifndef SVG_PARSER_SVGERRORCODE_H
+#define SVG_PARSER_SVGERRORCODE_H
+
+enum SvgErrorCode {
+    INVALID_XML_VERSION_TAG,
+    INVALID_DOCTYPE_TAG,
+    INVALID_PARENT_ELEMENT_TAG,
+};
+
+#endif //SVG_PARSER_SVGERRORCODE_H

@@ -37,7 +37,7 @@ public:
 
     const String &getDoctypeTag() const;
 
-    void setDoctypeTag(const String &doctypeTag);
+    void setDoctypeTag(const String &newDoctypeTag);
 
     const String &getFilename() const;
 

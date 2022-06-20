@@ -10,6 +10,8 @@ set(HEADER_FILES
         ${HEADERS_DIR}/exception/HelperErrorCode.h
         ${HEADERS_DIR}/exception/DomException.h
         ${HEADERS_DIR}/exception/DomErrorCode.h
+        ${HEADERS_DIR}/exception/SvgException.h
+        ${HEADERS_DIR}/exception/SvgErrorCode.h
         ${HEADERS_DIR}/helper/String.h
         ${HEADERS_DIR}/helper/Vector.h
         ${HEADERS_DIR}/helper/FileStreamHelper.h
@@ -25,6 +27,7 @@ set(HEADER_FILES
 set(SOURCE_FILES
         exception/HelperException.cpp
         exception/DomException.cpp
+        exception/SvgException.cpp
         helper/String.cpp
         helper/FileStreamHelper.cpp
         dom/DomDocument.cpp
