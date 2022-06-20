@@ -21,7 +21,7 @@ char FileStreamHelper::peekWithOffset(std::istream &in, unsigned int position) {
 }
 
 void FileStreamHelper::skipWhitespaces(std::istream &in) {
-    while (in.peek() == ' ' || in.peek() == '\t' || in.peek() == '\n') {
+    while (in.peek() == ' ' || in.peek() == '\t' || in.peek() == '\n' || in.peek() == '\r') {
         in.get();
     }
 }
