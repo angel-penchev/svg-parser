@@ -3,14 +3,26 @@
 //
 
 #include "../../include/program/Program.h"
-#include "../../include/helper/String.h"
 
 int Program::run() {
     String command;
-    while (std::cout << "|> " && std::cin >> command) {
+    Svg *svg = nullptr;
+    while (std::cout << "|> " && std::cin >> command && std::cin.ignore()) {
+        // Command for opening an SVG file
+        if (command == "open") {
+            Program::openCommand(svg);
+            continue;
+        }
+
+        // Command for closing an SVG file
+        if (command == "close") {
+            Program::closeCommand(svg);
+            continue;
+        }
+
         // Command for printing all the SVG shapes
         if (command == "print") {
-            Program::printCommand();
+            Program::printCommand(svg);
             continue;
         }
 
@@ -19,28 +31,60 @@ int Program::run() {
             break;
         }
     }
-
     std::cout << '\n';
 
     return 0;
 }
 
-void Program::printCommand() {
+void Program::openCommand(Svg *svg) {
+    // User input for filename
+    char filename[MAX_STR_LEN];
+    std::cin >> filename;
+
+    // Verify no other file is open
+    if (svg != nullptr) {
+        std::cerr << "ERR: There is a file already open.";
+        return;
+    }
+
+    try {
+        // Create DomDocument and SVG from filename
+        svg = new Svg(*(new DomDocument(filename)));
+        std::cout << "Successfully opened " << filename << ".\n";
+    } catch (const std::exception &exception) {
+        std::cerr << "ERR: " << exception.what() << '\n';
+        return;
+    }
+}
+
+void Program::closeCommand(Svg *svg) {
+    if (svg == nullptr) {
+        std::cerr << "ERR: No file is currently open.";
+        return;
+    }
+
+    // Delete SVG without saving.
+    String filename = svg->getDocument().getFilename();
+    delete svg;
+    svg = nullptr;
+    std::cout << "Successfully closed " << filename << ".\n";
+}
+
+void Program::printCommand(Svg *svg) {
+}
+
+void Program::createCommand(Svg *svg) {
 
 }
 
-void Program::createCommand() {
+void Program::eraseCommand(Svg *svg) {
 
 }
 
-void Program::eraseCommand() {
+void Program::translateCommand(Svg *svg) {
 
 }
 
-void Program::translateCommand() {
-
-}
-
-void Program::withinCommand() {
+void Program::withinCommand(Svg *svg) {
 
 }

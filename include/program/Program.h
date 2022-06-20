@@ -7,23 +7,28 @@
 
 #include <iostream>
 #include <cstring>
+#include "../svg/Svg.h"
 
-#define MAX_CMD_LEN 128
+#define MAX_STR_LEN 1024
 
 class Program {
 private:
 public:
     static int run();
 
-    static void printCommand();
+    static void openCommand(Svg *svg);
 
-    void createCommand();
+    static void printCommand(Svg *svg);
 
-    void eraseCommand();
+    static void createCommand(Svg *svg);
 
-    void translateCommand();
+    static void eraseCommand(Svg *svg);
 
-    void withinCommand();
+    static void translateCommand(Svg *svg);
+
+    static void withinCommand(Svg *svg);
+
+    static void closeCommand(Svg *svg);
 };
 
 
