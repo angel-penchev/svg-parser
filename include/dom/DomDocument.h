@@ -14,7 +14,7 @@ private:
     String versionTag;
     String doctypeTag;
     String filename;
-    DomElement *parentElement;
+    DomElement *parentElement = nullptr;
 
     void copy(const DomDocument &other);
 

@@ -102,6 +102,10 @@ const Vector<DomElement *> &DomElement::getChildren() const {
 }
 
 void DomElement::setChildren(const Vector<DomElement *> &newChildren) {
+    for (unsigned int i = 0; i < this->children.getSize(); i++) {
+        delete this->children[i];
+    }
+    
     this->children = newChildren;
 }
 

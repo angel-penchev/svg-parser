@@ -77,6 +77,7 @@ DomElement *DomDocument::getParentElement() const {
 }
 
 void DomDocument::setParentElement(DomElement *newParentElement) {
+    delete this->parentElement;
     this->parentElement = newParentElement;
 }
 
@@ -87,4 +88,5 @@ void DomDocument::copy(const DomDocument &other) {
 
 void DomDocument::clear() {
     delete this->parentElement;
+    this->parentElement = nullptr;
 }
