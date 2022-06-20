@@ -16,12 +16,15 @@ DomElement::DomElement(std::istream &in) : tag(), attributes(), children() {
     }
 
     // Get tag name
-    this->tag = String(in, ' '); // TODO: Handle case with no attributes
+    Vector<char> tagDelimiters;
+    tagDelimiters.push(' ');
+    tagDelimiters.push('>');
+    this->tag = String(in, tagDelimiters);
 
     // Get all attributes
     while (in.peek() != '/' && in.peek() != '>') {
         this->attributes.push(DomElementAttribute(in));
-        in.get(); // TODO: Skip multiple whitespaces
+        FileStreamHelper::skipWhitespaces(in);
     }
 
     // Get children if the tag is not self-closing
@@ -31,7 +34,9 @@ DomElement::DomElement(std::istream &in) : tag(), attributes(), children() {
         };
 
         // Validate the element has a closing tag
-        String closingTag(in, '>');
+        Vector<char> closingTagDelimiters;
+        closingTagDelimiters.push('>');
+        String closingTag(in, closingTagDelimiters);
         String expectedClosingTag = String("</") + String(this->tag);
         if (closingTag != expectedClosingTag) {
             throw DomException(DomErrorCode::INVALID_DOM_ELEMENT_FORMAT);

@@ -10,6 +10,8 @@
 class FileStreamHelper {
 public:
     static char peekWithOffset(std::istream &in, unsigned int position = 1);
+
+    static void skipWhitespaces(std::istream &in);
 };
 
 

@@ -27,13 +27,23 @@ String::String(const String &other) {
  * String input file constructor.
  * Reads the information for a String value (until a delimiter) from a file and constructs a String object based on it.
  * @param in Input file stream
- * @param delimiter Delimiter, indicating the end of the String
+ * @param delimiters Delimiters, indicating the end of the String
  */
-String::String(std::istream &in, const char delimiter) {
+String::String(std::istream &in, Vector<char> delimiters) {
     char readBuffer[MAX_STRING_LEN];
-    in.getline(readBuffer, MAX_STRING_LEN, delimiter);
+    char currentChar;
+    unsigned char valueLength = 0;
+    while (in) {
+        in.read(&currentChar, 1);
 
-    unsigned char valueLength = std::strlen(readBuffer) + 1;
+        if (delimiters.contains(currentChar)) {
+            readBuffer[valueLength++] = '\0';
+            break;
+        }
+
+        readBuffer[valueLength++] = currentChar;
+    }
+
     this->value = new char[valueLength];
     std::strncpy(this->value, readBuffer, valueLength);
 }
@@ -127,13 +137,9 @@ unsigned int String::getLength() const {
 }
 
 /**
- * Appends another string to the String.
+ * Concatenates the current string with another.
  * @param other Other string to be appended
- */
-/**
- * Concatenates the current string with another
- * @param other
- * @return
+ * @return String which has both strings concatenated
  */
 String String::concatenate(const String &other) const {
     // Create a new value buffer long enough to hold both strings and a '\0'

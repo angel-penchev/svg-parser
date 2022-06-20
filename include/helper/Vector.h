@@ -21,7 +21,7 @@ private:
     void clear();
 
 public:
-    explicit Vector(unsigned int capacity = 0);
+    explicit Vector(unsigned int capacity = DEFAULT_CAPACITY);
 
     Vector(const Vector &other);
 
@@ -46,6 +46,10 @@ public:
     T &at(unsigned int index) noexcept(false);
 
     const T &at(unsigned int index) const noexcept(false);
+
+    T *find(T element);
+
+    bool contains(T element);
 };
 
 /**
@@ -211,6 +215,21 @@ const T &Vector<T>::at(unsigned int index) const noexcept(false) {
         throw HelperException(HelperErrorCode::INDEX_OUT_OF_INDEX);
     }
     return this->array[index];
+}
+
+template<typename T>
+T *Vector<T>::find(T element) {
+    for (unsigned int i = 0; i < this->size; i++) {
+        if (this->array[i] == element) {
+            return &this->array[i];
+        }
+    }
+    return nullptr;
+}
+
+template<typename T>
+bool Vector<T>::contains(T element) {
+    return this->find(element) != nullptr;
 }
 
 /**

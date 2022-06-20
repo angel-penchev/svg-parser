@@ -3,6 +3,7 @@
 //
 
 #include "../../include/dom/DomElementAttribute.h"
+#include "../../include/helper/FileStreamHelper.h"
 
 /**
  * DomElementAttribute parameter constructor.
@@ -16,7 +17,11 @@ DomElementAttribute::DomElementAttribute(std::istream &in) : name(), value() {
     char readBuffer;
 
     // Get attribute name
-    this->name = String(in, '='); // TODO: Skip whitespaces
+    Vector<char> nameDelimiters;
+    nameDelimiters.push(' ');
+    nameDelimiters.push('=');
+    this->name = String(in, nameDelimiters);
+    FileStreamHelper::skipWhitespaces(in);
 
     // TODO: Validate that the name doesn't contain '/' and ' '?
 
@@ -27,7 +32,9 @@ DomElementAttribute::DomElementAttribute(std::istream &in) : name(), value() {
     }
 
     // Get attribute value
-    this->value = String(in, '"');
+    Vector<char> valueDelimiters;
+    valueDelimiters.push('"');
+    this->value = String(in, valueDelimiters);
 }
 
 bool DomElementAttribute::operator==(const DomElementAttribute &other) const {
