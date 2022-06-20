@@ -47,6 +47,8 @@ public:
     String concatenate(const String &other) const;
 
     bool getLine(std::istream &in = std::cin, const char delimiter = '\n');
+
+    double toDouble();
 };
 
 

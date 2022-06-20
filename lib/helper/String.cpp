@@ -186,6 +186,10 @@ bool String::getLine(std::istream &in, const char delimiter) {
     delete this->value;
     this->value = new char[std::strlen(readBuffer) + 1];
     std::strncpy(this->value, readBuffer, std::strlen(readBuffer) + 1);
-    
+
     return result;
+}
+
+double String::toDouble() {
+    return std::strtold(this->value, nullptr);
 }
