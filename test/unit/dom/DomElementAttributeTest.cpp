@@ -10,6 +10,7 @@ class DomElementAttributeFixture : public ::testing::Test {
 protected:
     const String fixtureDirectoryFilepath = PATH_TO_FIXTURES;
     const String domAttributeFilepath = fixtureDirectoryFilepath + "dom-attribute.xml";
+    const String outDomAttributeFilepath = "out-dom-attribute.xml";
 
     DomElementAttribute *domAttribute{};
 
@@ -32,4 +33,18 @@ TEST_F(DomElementAttributeFixture, ShouldExposeAFileInputConstructor) {
 
     // Validate attribute value
     ASSERT_STREQ(domAttribute->getValue().getValue(), "10");
+}
+
+TEST_F(DomElementAttributeFixture, ShouldExposeAMethodForSerializing) {
+    // Serialize a DomElementAttribute to a text file
+    std::ofstream outFile(outDomAttributeFilepath.getValue(), std::ios::out | std::ios::trunc);
+    ASSERT_TRUE(outFile);
+    outFile << *domAttribute;
+    outFile.close();
+
+    // Verify file contents
+    std::ifstream resultFile(outDomAttributeFilepath.getValue(), std::ios::in);
+    ASSERT_TRUE(resultFile);
+    DomElementAttribute domAttributeFromFile(resultFile);
+    ASSERT_EQ(*domAttribute, domAttributeFromFile);
 }

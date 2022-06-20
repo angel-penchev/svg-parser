@@ -31,6 +31,7 @@ DomElementAttribute::DomElementAttribute(std::istream &in) : name(), value() {
     }
 
     // Validate the value starts with an opening quote
+    FileStreamHelper::skipWhitespaces(in);
     in.read(&readBuffer, sizeof(readBuffer));
     if (readBuffer != '"' && readBuffer != '\'') {
         throw DomException(DomErrorCode::INVALID_DOM_ATTRIBUTE_FORMAT);
@@ -47,6 +48,17 @@ DomElementAttribute::DomElementAttribute(std::istream &in) : name(), value() {
         throw DomException(DomErrorCode::INVALID_DOM_ATTRIBUTE_FORMAT);
     }
 }
+
+/**
+ * Output "<<" operator override for output streams.
+ * @param out Output stream
+ * @param domElementAttribute Reference to a DomElementAttribute object to output
+ * @return Output stream reference
+ */
+std::ostream &operator<<(std::ostream &out, DomElementAttribute &domElementAttribute) {
+    return domElementAttribute.serialize(out);
+}
+
 
 bool DomElementAttribute::operator==(const DomElementAttribute &other) const {
     return this->name == other.name && this->value == other.value;
@@ -86,4 +98,9 @@ String DomElementAttribute::getValue() const {
  */
 void DomElementAttribute::setValue(const String &newValue) {
     this->value = newValue;
+}
+
+std::ostream &DomElementAttribute::serialize(std::ostream &out) {
+    out << this->name << "=\"" << this->value << '"';
+    return out;
 }

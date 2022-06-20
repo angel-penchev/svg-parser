@@ -19,6 +19,12 @@ public:
 
     explicit DomElementAttribute(std::istream &in);
 
+    friend std::ostream &operator<<(std::ostream &out, DomElementAttribute &domElementAttribute);
+
+    bool operator==(const DomElementAttribute &other) const;
+
+    bool operator!=(const DomElementAttribute &rhs) const;
+
     String getName() const;
 
     void setName(const String &newName);
@@ -27,9 +33,7 @@ public:
 
     void setValue(const String &newValue);
 
-    bool operator==(const DomElementAttribute &other) const;
-
-    bool operator!=(const DomElementAttribute &rhs) const;
+    std::ostream &serialize(std::ostream &out);
 };
 
 
