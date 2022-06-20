@@ -5,7 +5,6 @@
 #include <cstring>
 #include <iostream>
 #include "../../include/helper/String.h"
-#include "../../include/exception/HelperException.h"
 
 /**
  * String parameter constructor.
@@ -83,6 +82,16 @@ String &String::operator=(const String &other) {
  */
 std::ostream &operator<<(std::ostream &out, const String &string) {
     return out << string.getValue();
+}
+
+/**
+ * Input ">>" operator override for input streams.
+ * @param in Input stream
+ * @param string Reference to a String object to take the input
+ * @return Input stream reference
+ */
+std::istream &operator>>(std::istream &in, const String &string) {
+    return in >> string.value;
 }
 
 /**

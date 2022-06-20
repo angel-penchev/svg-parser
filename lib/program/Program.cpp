@@ -7,7 +7,7 @@
 
 int Program::run() {
     String command;
-    while (std::cout << "|> " && command.getLine(std::cin, ' ')) {
+    while (std::cout << "|> " && std::cin >> command) {
         // Command for printing all the SVG shapes
         if (command == "print") {
             Program::printCommand();
