@@ -112,14 +112,16 @@ void DomElement::setChildren(const Vector<DomElement *> &newChildren) {
 void DomElement::copy(const DomElement &other) {
     this->setTag(tag);
     this->setAttributes(attributes);
+    this->setChildren(Vector<DomElement *>());
     for (unsigned int i = 0; i < other.children.getSize(); i++) {
-        this->children[i] = other.children[i];
+        this->children.push(other.children[i]);
     }
 }
 
 void DomElement::clear() {
     for (unsigned int i = 0; i < this->children.getSize(); i++) {
         delete this->children[i];
+        this->children.erase(i);
     }
 }
 

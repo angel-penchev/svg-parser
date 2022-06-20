@@ -16,19 +16,19 @@ private:
 public:
     static int run();
 
-    static void openCommand(Svg *svg);
+    static void openCommand(Svg **svg);
 
-    static void printCommand(Svg *svg);
+    static void printCommand(Svg **svg);
 
-    static void createCommand(Svg *svg);
+    static void createCommand(Svg **svg);
 
-    static void eraseCommand(Svg *svg);
+    static void eraseCommand(Svg **svg);
 
-    static void translateCommand(Svg *svg);
+    static void translateCommand(Svg **svg);
 
-    static void withinCommand(Svg *svg);
+    static void withinCommand(Svg **svg);
 
-    static void closeCommand(Svg *svg);
+    static void closeCommand(Svg **svg);
 };
 
 

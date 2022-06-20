@@ -21,6 +21,8 @@ private:
     void clear();
 
 public:
+    DomDocument();
+
     explicit DomDocument(const String &filename);
 
     DomDocument(const DomDocument &other);

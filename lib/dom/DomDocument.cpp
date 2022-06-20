@@ -5,6 +5,8 @@
 #include "../../include/dom/DomDocument.h"
 #include "../../include/helper/FileStreamHelper.h"
 
+DomDocument::DomDocument() : parentElement(nullptr) {}
+
 DomDocument::DomDocument(const String &filename) : filename(filename) {
     // Open DOM file
     std::ifstream in(filename.getValue(), std::ios::in);
@@ -95,8 +97,10 @@ std::ostream &DomDocument::serialize(std::ostream &out) {
 }
 
 void DomDocument::copy(const DomDocument &other) {
-    this->setFilename(filename);
-    this->parentElement = other.parentElement;
+    this->setVersionTag(other.versionTag);
+    this->setDoctypeTag(other.doctypeTag);
+    this->setFilename(other.filename);
+    this->setParentElement(other.parentElement);
 }
 
 void DomDocument::clear() {
