@@ -25,6 +25,11 @@ DomElementAttribute::DomElementAttribute(std::istream &in) : name(), value() {
 
     // TODO: Validate that the name doesn't contain '/' and ' '?
 
+    // Validate there is a '=' in between the name and value
+    if (in.get() != '=') {
+        throw DomException(DomErrorCode::INVALID_DOM_ATTRIBUTE_FORMAT);
+    }
+
     // Validate the value starts with an opening quote
     in.read(&readBuffer, sizeof(readBuffer));
     if (readBuffer != '"' && readBuffer != '\'') {
@@ -35,6 +40,12 @@ DomElementAttribute::DomElementAttribute(std::istream &in) : name(), value() {
     Vector<char> valueDelimiters;
     valueDelimiters.push('"');
     this->value = String(in, valueDelimiters);
+
+    // Validate the value ends with a closing quote
+    in.read(&readBuffer, sizeof(readBuffer));
+    if (readBuffer != '"' && readBuffer != '\'') {
+        throw DomException(DomErrorCode::INVALID_DOM_ATTRIBUTE_FORMAT);
+    }
 }
 
 bool DomElementAttribute::operator==(const DomElementAttribute &other) const {

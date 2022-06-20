@@ -10,6 +10,9 @@ DomElement::DomElement(const String &tag, const Vector<DomElementAttribute> &att
 
 
 DomElement::DomElement(std::istream &in) : tag(), attributes(), children() {
+    //Skip all the leading whitespaces
+    FileStreamHelper::skipWhitespaces(in);
+
     // Validate the element starts with an '<'
     if (in.get() != '<') {
         throw DomException(DomErrorCode::INVALID_DOM_ELEMENT_FORMAT);
@@ -20,6 +23,7 @@ DomElement::DomElement(std::istream &in) : tag(), attributes(), children() {
     tagDelimiters.push(' ');
     tagDelimiters.push('>');
     this->tag = String(in, tagDelimiters);
+    FileStreamHelper::skipWhitespaces(in);
 
     // Get all attributes
     while (in.peek() != '/' && in.peek() != '>') {
@@ -29,6 +33,10 @@ DomElement::DomElement(std::istream &in) : tag(), attributes(), children() {
 
     // Get children if the tag is not self-closing
     if (in.get() == '>') {
+        // Skip spaces before children tags
+        FileStreamHelper::skipWhitespaces(in);
+
+        // Read children until closing tag
         while (FileStreamHelper::peekWithOffset(in, 2) != '/') {
             this->children.push(new DomElement(in));
         };
@@ -47,6 +55,9 @@ DomElement::DomElement(std::istream &in) : tag(), attributes(), children() {
             throw DomException(DomErrorCode::INVALID_DOM_ELEMENT_FORMAT);
         }
     }
+
+    //Skip all the whitespaces afterwards
+    FileStreamHelper::skipWhitespaces(in);
 }
 
 DomElement::DomElement(const DomElement &other) {

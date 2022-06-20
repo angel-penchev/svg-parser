@@ -33,6 +33,8 @@ String::String(std::istream &in, Vector<char> delimiters) {
     char readBuffer[MAX_STRING_LEN];
     char currentChar;
     unsigned char valueLength = 0;
+
+    // Read string value from the input stream until a delimiter is reached or eof
     while (in) {
         in.read(&currentChar, 1);
 
@@ -44,8 +46,12 @@ String::String(std::istream &in, Vector<char> delimiters) {
         readBuffer[valueLength++] = currentChar;
     }
 
+    // Store the read string value
     this->value = new char[valueLength];
     std::strncpy(this->value, readBuffer, valueLength);
+
+    // Offset the filestream cursor by 1 position back
+    in.seekg(-1, std::ios::cur);
 }
 
 /**
