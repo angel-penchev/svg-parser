@@ -15,6 +15,8 @@ const char *SvgException::getErrorMessage() const {
             return "Invalid DOCTYPE tag.";
         case SvgErrorCode::INVALID_PARENT_ELEMENT_TAG:
             return "Invalid parent node tag.";
+        case SvgErrorCode::INVALID_PARENT_ELEMENT_XMLNS:
+            return "Invalid parent node XML namespace.";
         default:
             throw std::invalid_argument("Unimplemented item.");
     }

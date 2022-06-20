@@ -39,7 +39,7 @@ public:
 
     void setTag(const String &tag);
 
-    const Vector<DomElementAttribute> &getAttributes() const;
+    const Vector<DomElementAttribute> getAttributes() const;
 
     void setAttributes(const Vector<DomElementAttribute> &newAttributes);
 

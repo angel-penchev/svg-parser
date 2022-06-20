@@ -24,7 +24,11 @@ Svg::Svg(const DomDocument &document) : document(document), shapes() {
         throw SvgException(SvgErrorCode::INVALID_PARENT_ELEMENT_TAG);
     }
 
-    // TODO: xmlns validation
+    // Validate parent XML namespace
+    if (!this->document.getParentElement()->getAttributes().contains(
+            DomElementAttribute("xmlns", "http://www.w3.org/2000/svg"))) {
+        throw SvgException(SvgErrorCode::INVALID_PARENT_ELEMENT_XMLNS);
+    }
 
     // Convert elements into shapes
     for (unsigned int i = 0; document.getParentElement()->getChildren().getSize() < i; i++) {

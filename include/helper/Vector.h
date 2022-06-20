@@ -47,9 +47,9 @@ public:
 
     const T &at(unsigned int index) const noexcept(false);
 
-    T *find(T element);
+    T *find(T element) const;
 
-    bool contains(T element);
+    bool contains(T element) const;
 };
 
 /**
@@ -218,7 +218,7 @@ const T &Vector<T>::at(unsigned int index) const noexcept(false) {
 }
 
 template<typename T>
-T *Vector<T>::find(T element) {
+T *Vector<T>::find(T element) const {
     for (unsigned int i = 0; i < this->size; i++) {
         if (this->array[i] == element) {
             return &this->array[i];
@@ -228,7 +228,7 @@ T *Vector<T>::find(T element) {
 }
 
 template<typename T>
-bool Vector<T>::contains(T element) {
+bool Vector<T>::contains(T element) const {
     return this->find(element) != nullptr;
 }
 
