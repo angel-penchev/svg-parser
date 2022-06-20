@@ -24,6 +24,9 @@ Svg::Svg(const DomDocument &document) : document(document), shapes() {
         throw SvgException(SvgErrorCode::INVALID_PARENT_ELEMENT_TAG);
     }
 
+    // TODO: xmlns validation
+
+    // Convert elements into shapes
     for (unsigned int i = 0; document.getParentElement()->getChildren().getSize() < i; i++) {
         if (document.getParentElement()->getChildren()[i]->getTag() == "rect") {
             this->shapes.push(Rect(*document.getParentElement()->getChildren()[i]));
@@ -49,4 +52,12 @@ const Vector<Shape> &Svg::getShapes() const {
 
 void Svg::setShapes(const Vector<Shape> &newShapes) {
     this->shapes = newShapes;
+}
+
+void Svg::updateDocument() {
+    Vector<DomElement *> updatedChildren;
+    for (unsigned int i = 0; i < this->shapes.getSize(); i++) {
+        updatedChildren.push(new DomElement(this->shapes[i].toDomElement()));
+    }
+    this->document.getParentElement()->setChildren(updatedChildren);
 }

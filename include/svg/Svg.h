@@ -24,6 +24,8 @@ public:
     const Vector<Shape> &getShapes() const;
 
     void setShapes(const Vector<Shape> &newShapes);
+
+    void updateDocument();
 };
 
 
