@@ -72,6 +72,11 @@ DomElement &DomElement::operator=(const DomElement &other) {
     return *this;
 }
 
+std::ostream &operator<<(std::ostream &out, DomElement &domElement) {
+    return domElement.serialize(out);
+}
+
+
 DomElement::~DomElement() {
     this->clear();
 }
@@ -112,4 +117,25 @@ void DomElement::clear() {
     for (unsigned int i = 0; i < this->children.getSize(); i++) {
         delete this->children[i];
     }
+}
+
+std::ostream &DomElement::serialize(std::ostream &out) {
+    out << '<' << this->tag;
+
+    for (unsigned int i = 0; i < this->attributes.getSize(); i++) {
+        out << ' ' << this->attributes[i];
+    }
+
+    if (children.getSize() == 0) {
+        out << "/>";
+    } else {
+        out << ">";
+        for (unsigned int i = 0; i < this->children.getSize(); i++) {
+            out << "\n\t" << *this->children[i];
+        }
+
+        out << "\n</" << this->tag << ">";
+    }
+
+    return out;
 }

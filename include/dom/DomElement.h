@@ -31,6 +31,8 @@ public:
 
     DomElement &operator=(const DomElement &other);
 
+    friend std::ostream &operator<<(std::ostream &out, DomElement &domElement);
+
     virtual ~DomElement();
 
     const String &getTag() const;
@@ -44,6 +46,8 @@ public:
     const Vector<DomElement *> &getChildren() const;
 
     void setChildren(const Vector<DomElement *> &newChildren);
+
+    std::ostream &serialize(std::ostream &out);
 };
 
 
