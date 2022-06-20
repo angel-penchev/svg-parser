@@ -9,7 +9,7 @@
 #include "../dom/DomElement.h"
 
 class Shape {
-private:
+protected:
     String fill;
     String stroke;
     unsigned int strokeWidth;
