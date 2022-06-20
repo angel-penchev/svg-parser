@@ -7,6 +7,8 @@
 #include "../../include/svg/Circle.h"
 #include "../../include/exception/SvgException.h"
 
+Svg::Svg() : document(), shapes() {}
+
 Svg::Svg(const DomDocument &document) : document(document), shapes() {
     // Validate xml version tag
     if (this->document.getVersionTag() != R"(<?xml version="1.0" standalone="no"?>)") {
@@ -14,13 +16,13 @@ Svg::Svg(const DomDocument &document) : document(document), shapes() {
     }
 
     // Validate dom doctype
-    if (this->document.getVersionTag() !=
+    if (this->document.getDoctypeTag() !=
         R"(<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">)") {
         throw SvgException(SvgErrorCode::INVALID_DOCTYPE_TAG);
     }
 
     // Validate that the parent node is a svg
-    if (this->document.getParentElement()->getTag() == "svg") {
+    if (this->document.getParentElement()->getTag() != "svg") {
         throw SvgException(SvgErrorCode::INVALID_PARENT_ELEMENT_TAG);
     }
 

@@ -15,6 +15,8 @@ private:
     DomDocument document;
     Vector<Shape> shapes;
 public:
+    Svg();
+
     explicit Svg(const DomDocument &document);
 
     const DomDocument &getDocument() const;
