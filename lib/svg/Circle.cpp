@@ -4,6 +4,10 @@
 
 #include "../../include/svg/Circle.h"
 
+/**
+ * Circle constructor from DomElement.
+ * @param domElement DomElement to be read.
+ */
 Circle::Circle(const DomElement &domElement) : Shape(domElement) {
     for (unsigned int i = 0; i < domElement.getAttributes().getSize(); i++) {
         if (domElement.getAttributes()[i].getName() == "fill") {
@@ -38,26 +42,50 @@ Circle::Circle(const DomElement &domElement) : Shape(domElement) {
     }
 }
 
+/**
+ * Circle center X (cx) getter.
+ * @return Circle cx
+ */
 double Circle::getCx() const {
     return this->cx;
 }
 
+/**
+ * Circle center X (cx) setter.
+ * @return Circle cx to be set
+ */
 void Circle::setCx(double newCx) {
     this->cx = newCx;
 }
 
+/**
+ * Circle center Y (cy) getter.
+ * @return Circle cy
+ */
 double Circle::getCy() const {
     return this->cy;
 }
 
+/**
+ * Circle center Y (cy) setter.
+ * @return Circle cy to be set
+ */
 void Circle::setCy(double newCy) {
     this->cy = newCy;
 }
 
+/**
+ * Circle radius (r) getter.
+ * @return Circle r.
+ */
 double Circle::getR() const {
     return this->r;
 }
 
+/**
+ * Circle radius (r) setter.
+ * @return Circle r to be set
+ */
 void Circle::setR(double newR) {
     this->r = newR;
 }
