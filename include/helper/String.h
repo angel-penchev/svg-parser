@@ -6,7 +6,7 @@
 #define SVG_PARSER_STRING_H
 
 
-#include <ostream>
+#include <iostream>
 #include "./Vector.h"
 
 #define MAX_STRING_LEN 1024
@@ -46,7 +46,7 @@ public:
 
     String concatenate(const String &other) const;
 
-    bool stdinGetLine(const char delimiter = '\n');
+    bool getLine(std::istream &in = std::cin, const char delimiter = '\n');
 };
 
 

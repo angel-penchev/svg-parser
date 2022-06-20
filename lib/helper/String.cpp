@@ -178,6 +178,14 @@ void String::clear() {
     this->value = nullptr;
 }
 
-bool String::stdinGetLine(const char delimiter) {
-    return (bool) std::cin.getline(this->value, MAX_STRING_LEN, delimiter);
+bool String::getLine(std::istream &in, const char delimiter) {
+    char readBuffer[MAX_STRING_LEN];
+    bool result = (bool) in.getline(readBuffer, MAX_STRING_LEN, delimiter);
+
+    // Store the read string value
+    delete this->value;
+    this->value = new char[std::strlen(readBuffer) + 1];
+    std::strncpy(this->value, readBuffer, std::strlen(readBuffer) + 1);
+    
+    return result;
 }

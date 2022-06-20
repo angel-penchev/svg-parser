@@ -11,6 +11,8 @@
 
 class DomDocument {
 private:
+    String versionTag;
+    String doctypeTag;
     String filename;
     DomElement *parentElement;
 
@@ -28,6 +30,14 @@ public:
     virtual ~DomDocument();
 
     void serialize(std::ostream out);
+
+    const String &getVersionTag() const;
+
+    void setVersionTag(const String &newVersionTag);
+
+    const String &getDoctypeTag() const;
+
+    void setDoctypeTag(const String &doctypeTag);
 
     const String &getFilename() const;
 

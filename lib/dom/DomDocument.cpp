@@ -3,6 +3,7 @@
 //
 
 #include "../../include/dom/DomDocument.h"
+#include "../../include/helper/FileStreamHelper.h"
 
 DomDocument::DomDocument(const String &filename) : filename(filename) {
     // Open DOM file
@@ -10,6 +11,15 @@ DomDocument::DomDocument(const String &filename) : filename(filename) {
     if (!file) {
         throw DomException(DomErrorCode::CANNOT_SET_NULLPTR_AS_DOM_VALUE);
     }
+    FileStreamHelper::skipWhitespaces(file);
+
+    // Read xml version tag
+    this->versionTag.getLine(file);
+    FileStreamHelper::skipWhitespaces(file);
+
+    // Read doctype tag
+    this->doctypeTag.getLine(file);
+    FileStreamHelper::skipWhitespaces(file);
 
     // Read all parent elements in DOM tree
     this->parentElement = new DomElement(file);
@@ -36,6 +46,22 @@ DomDocument::~DomDocument() {
 
 void DomDocument::serialize(std::ostream out) {
     // TODO: Serialize
+}
+
+const String &DomDocument::getVersionTag() const {
+    return this->versionTag;
+}
+
+void DomDocument::setVersionTag(const String &newVersionTag) {
+    this->versionTag = newVersionTag;
+}
+
+const String &DomDocument::getDoctypeTag() const {
+    return this->doctypeTag;
+}
+
+void DomDocument::setDoctypeTag(const String &newDoctypeTag) {
+    this->doctypeTag = newDoctypeTag;
 }
 
 const String &DomDocument::getFilename() const {
