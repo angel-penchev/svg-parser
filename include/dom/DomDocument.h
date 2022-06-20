@@ -31,6 +31,8 @@ public:
 
     void save();
 
+    void saveAs(String &filepath);
+
     const String &getVersionTag() const;
 
     void setVersionTag(const String &newVersionTag);
@@ -46,6 +48,8 @@ public:
     DomElement *getParentElement() const;
 
     void setParentElement(DomElement *newParentElement);
+
+    std::ostream &serialize(std::ostream &out);
 };
 
 

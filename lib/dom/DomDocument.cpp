@@ -14,11 +14,14 @@ DomDocument::DomDocument(const String &filename) : filename(filename) {
     FileStreamHelper::skipWhitespaces(in);
 
     // Read xml version tag
-    this->versionTag.getLine(in);
+    Vector<char> tagDelimiters;
+    tagDelimiters.push('\n');
+    tagDelimiters.push('\r');
+    this->versionTag = String(in, tagDelimiters);
     FileStreamHelper::skipWhitespaces(in);
 
     // Read doctype tag
-    this->doctypeTag.getLine(in);
+    this->doctypeTag = String(in, tagDelimiters);
     FileStreamHelper::skipWhitespaces(in);
 
     // Read all parent elements in DOM tree
@@ -46,7 +49,12 @@ DomDocument::~DomDocument() {
 
 void DomDocument::save() {
     std::ofstream out(this->filename.getValue(), std::ios::out | std::ios::trunc);
-    out << this->versionTag << '\n' << this->doctypeTag << '\n' << *this->parentElement;
+    this->serialize(out);
+}
+
+void DomDocument::saveAs(String &filepath) {
+    std::ofstream out(filepath.getValue(), std::ios::out | std::ios::trunc);
+    this->serialize(out);
 }
 
 const String &DomDocument::getVersionTag() const {
@@ -80,6 +88,10 @@ DomElement *DomDocument::getParentElement() const {
 void DomDocument::setParentElement(DomElement *newParentElement) {
     delete this->parentElement;
     this->parentElement = newParentElement;
+}
+
+std::ostream &DomDocument::serialize(std::ostream &out) {
+    return out << this->versionTag << '\n' << this->doctypeTag << '\n' << *this->parentElement;
 }
 
 void DomDocument::copy(const DomDocument &other) {

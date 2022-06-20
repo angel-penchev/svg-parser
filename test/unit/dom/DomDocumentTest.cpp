@@ -49,10 +49,11 @@ TEST_F(DomDocumentFixture, ShouldExposeAFilepathConstructor) {
 
 TEST_F(DomDocumentFixture, ShouldExposeAMethodForSaving) {
     // Save the DomDocument
+    domDocument->setFilename(outDomDocumentFilepath);
     domDocument->save();
 
     // Verify file contents
     std::ifstream resultFile(outDomDocumentFilepath.getValue(), std::ios::in);
     ASSERT_TRUE(resultFile);
-    DomDocument domDocumentFromFile(domDocumentFilepath);
+    DomDocument domDocumentFromFile(outDomDocumentFilepath);
 }
