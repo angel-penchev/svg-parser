@@ -9,14 +9,18 @@
 #include <cstring>
 #include "../svg/Svg.h"
 
-#define MAX_STR_LEN 1024
-
 class Program {
 private:
 public:
     static int run();
 
     static void openCommand(Svg **svg);
+
+    static void closeCommand(Svg **svg);
+
+    static void saveCommand(Svg **svg);
+
+    static void saveAsCommand(Svg **svg);
 
     static void printCommand(Svg **svg);
 
@@ -27,8 +31,6 @@ public:
     static void translateCommand(Svg **svg);
 
     static void withinCommand(Svg **svg);
-
-    static void closeCommand(Svg **svg);
 };
 
 

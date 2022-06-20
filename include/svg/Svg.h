@@ -19,7 +19,7 @@ public:
 
     explicit Svg(const DomDocument &document);
 
-    const DomDocument &getDocument() const;
+    DomDocument getDocument() const;
 
     void setDocument(const DomDocument &newDocument);
 

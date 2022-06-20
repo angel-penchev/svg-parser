@@ -20,6 +20,18 @@ int Program::run() {
             continue;
         }
 
+        // Command for saving an SVG file
+        if (command == "save") {
+            Program::saveCommand(&svg);
+            continue;
+        }
+
+        // Command for saving an SVG file with another filename
+        if (command == "save") {
+            Program::saveAsCommand(&svg);
+            continue;
+        }
+
         // Command for printing all the SVG shapes
         if (command == "print") {
             Program::printCommand(&svg);
@@ -38,7 +50,7 @@ int Program::run() {
 
 void Program::openCommand(Svg **svg) {
     // User input for filename
-    char filename[MAX_STR_LEN];
+    String filename;
     std::cin >> filename;
 
     // Verify no other file is open
@@ -58,7 +70,8 @@ void Program::openCommand(Svg **svg) {
 }
 
 void Program::closeCommand(Svg **svg) {
-    if (svg == nullptr) {
+    // Validate a svg is open
+    if (*(svg) == nullptr) {
         std::cerr << "ERR: No file is currently open.\n";
         return;
     }
@@ -70,7 +83,46 @@ void Program::closeCommand(Svg **svg) {
     std::cout << "Successfully closed " << filename << ".\n";
 }
 
+void Program::saveCommand(Svg **svg) {
+    // Validate a svg is open
+    if (*(svg) == nullptr) {
+        std::cerr << "ERR: No file is currently open.\n";
+        return;
+    }
+
+    try {
+        // Create DomDocument and SVG from filename
+        (*svg)->getDocument().save();
+        std::cout << "Successfully saved " << (*svg)->getDocument().getFilename() << ".\n";
+    } catch (const std::exception &exception) {
+        std::cerr << "ERR: " << exception.what() << '\n';
+        return;
+    }
+}
+
+void Program::saveAsCommand(Svg **svg) {
+    // User input for filepath
+    String filepath;
+    std::cin >> filepath;
+
+    // Validate a SVG is open
+    if (*(svg) == nullptr) {
+        std::cerr << "ERR: No file is currently open.\n";
+        return;
+    }
+
+    try {
+        // Create DomDocument and SVG from filename
+        (*svg)->getDocument().saveAs(filepath);
+        std::cout << "Successfully saved " << (*svg)->getDocument().getFilename() << ".\n";
+    } catch (const std::exception &exception) {
+        std::cerr << "ERR: " << exception.what() << '\n';
+        return;
+    }
+}
+
 void Program::printCommand(Svg **svg) {
+
 }
 
 void Program::createCommand(Svg **svg) {

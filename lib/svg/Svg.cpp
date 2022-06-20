@@ -44,7 +44,7 @@ Svg::Svg(const DomDocument &document) : document(document), shapes() {
     }
 }
 
-const DomDocument &Svg::getDocument() const {
+DomDocument Svg::getDocument() const {
     return document;
 }
 
